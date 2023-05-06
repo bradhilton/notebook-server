@@ -3,6 +3,10 @@
 	"displayName": "notebook-server",
 	"description": "Launches a server for getting the contents of the active notebook.",
 	"version": "0.0.1",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/bradhilton/notebook-server.git"
+	},
 	"engines": {
 		"vscode": "^1.78.0"
 	},

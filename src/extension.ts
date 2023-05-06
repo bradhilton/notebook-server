@@ -23,6 +23,7 @@ type Cell = {
   document: Document
   metadata: { [key: string]: any }
   outputs: Output[]
+  executionSummary?: vscode.NotebookCellExecutionSummary
 }
 
 type Document = {
@@ -45,6 +46,7 @@ const cell = (cell: vscode.NotebookCell): Cell => ({
   document: document(cell.document),
   metadata: cell.metadata,
   outputs: cell.outputs.map(output),
+  executionSummary: cell.executionSummary,
 })
 
 const document = (document: vscode.TextDocument): Document => ({
@@ -61,7 +63,10 @@ const outputItem = (outputItem: vscode.NotebookCellOutputItem): OutputItem => {
 
   if (
     outputItem.mime.startsWith('text/') ||
-    outputItem.mime === 'application/json'
+    outputItem.mime === 'application/json' ||
+    outputItem.mime === 'application/vnd.code.notebook.stdout' ||
+    outputItem.mime === 'application/vnd.code.notebook.stderr' ||
+    outputItem.mime === 'application/vnd.code.notebook.error'
   ) {
     const decoder = new TextDecoder()
     data = decoder.decode(outputItem.data)
